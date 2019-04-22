@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="HandheldFriendly" content="true" />
+        <meta name="MobileOptimized" content="width" />
+        <meta name="format-detection" content="telephone=no">
+        <meta name="format-detection" content="address=no" />
+    </head>
+
+    <body>
+      <style>
+        #gnezdo_ru_18469 {
+          display: none !important;
+        }
+
+        .main-box {
+          width: 100%;
+          min-width: 275px;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left:0;
+          font-family: sans-serif;
+          text-size-adjust: 100%;
+          user-select: none;
+          text-decoration: none;
+          overflow: hidden;
+          background-color: #fff;
+          box-sizing: border-box;
+          border: 4px solid #9400d3;
+        }
+
+        .position-block {
+          height: 100%;
+          display: table;
+          margin: 0 auto;
+        }
+
+        .img {
+          background-repeat: no-repeat;
+          background-size: cover;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+        }
+
+        .img-block {
+          height: 100%;
+          position: relative;
+          float: left;
+          margin-right: 10px;
+        }
+
+        .text {
+          text-align: center;
+          color: black;
+          display: inline-block;
+        }
+
+        .button {
+          width: 100%;
+          color: #fff;
+          background-color: #9400d3;
+          border: none;
+          font-weight: bold;
+          text-transform: uppercase;
+          font-size: 0.8em;
+          max-width: 130px;
+          min-height: 30px;
+          display: block;
+          margin: 0 auto;
+        }
+
+        .button:focus {
+          outline: none;
+        }
+        .relative-box {
+          float: left;
+          font-weight: bold;
+          min-width: 120px;
+          position: relative;
+          height: 100%;
+        }
+
+        .absolute-box {
+          position: absolute;
+          top: 50%;
+        }
+
+      </style>
+      <div id="gnezdo_ru_18469">Загрузка...</div>
+      <script language='JavaScript'>
+          var s = document.createElement("script"),
+          f = function(){ document.getElementsByTagName("head")[0].appendChild(s); };
+          s.type = "text/javascript";
+          s.async = true;
+          s.src = 'https://news.gnezdo.ru/show/18469/block_a.js';
+          if (window.opera == "[object Opera]") {
+              document.addEventListener("DOMContentLoaded", f);
+          } else { f(); }
+      </script>
+
+      <script>
+        (function() {
+        var timer = setTimeout(loadCheck, 100);
+        var data;
+
+        function loadCheck() {
+          var root = document.querySelector('#gnezdo_ru_18469');
+          if (root.firstElementChild) {
+            data = parse();
+            document.body.removeChild(root);
+          } else {
+            var timer = setTimeout(loadCheck, 100);
+          }
+        };
+
+        function parse() {
+          var arr = window.Array.prototype.slice.call(document.querySelectorAll('#gnezdo_ru_18469 *'));
+          var data = {
+            'text' : [],
+           'image' : null,
+           'link' : null
+         }
+          arr.forEach(function(item) {
+              if (item.tagName.toLowerCase() === 'a' && item.firstElementChild !== null && item.href.replace(/\s/g, '') !== '') {
+                  data.link = item.href;
+              } else if (item.tagName.toLowerCase() === 'img' && item.src.replace(/\s/g, '') !== '') {
+                data.image = item.src;
+              } else if ( item.firstElementChild === null && item.textContent.replace(/\s/g, '') && !item.classList.contains('partner_link_bottom')) {
+                data.text.push(item.innerHTML);
+              }
+          });
+          console.log(data);
+          abc(data);
+        };
+
+        function abc(data) {
+          var mainBox = document.createElement('a');
+          var positionBlock = document.createElement('div');
+          var img = document.createElement('div');
+          var imgBlock = document.createElement('div');
+          var relativeBox = document.createElement('div');
+          var absoluteBox = document.createElement('div');
+          var text = document.createElement('div');
+          var button = document.createElement('button');
+
+          absoluteBox.appendChild(text);
+          absoluteBox.appendChild(button);
+          relativeBox.appendChild(absoluteBox);
+          imgBlock.appendChild(img);
+          positionBlock.appendChild(imgBlock);
+          positionBlock.appendChild(relativeBox);
+          mainBox.appendChild(positionBlock);
+          document.body.insertBefore(mainBox, document.body.querySelector('script'));
+
+          mainBox.classList.add('main-box');
+          positionBlock.classList.add('position-block');
+          img.classList.add('img');
+          imgBlock.classList.add('img-block');
+          relativeBox.classList.add('relative-box');
+          absoluteBox.classList.add('absolute-box');
+          text.classList.add('text');
+          button.classList.add('button');
+
+          function setSize() {
+            if (mainBox.clientWidth > mainBox.clientHeight) {
+              var padding = 0.02 * mainBox.clientWidth;
+                mainBox.style.padding = padding + 'px';
+            } else {
+              var padding = 0.02 * mainBox.clientHeight;
+              mainBox.style.padding = padding + 'px';
+            };
+
+            if (imgBlock.clientHeight * 1.25 >= 0.4 * mainBox.clientWidth) {
+              img.style.height = '70%';
+              img.style.marginTop = -img.clientHeight / 2 + 'px';
+              img.style.top = '50%';
+            } else {
+              img.style.height = '100%';
+              img.style.marginTop = 0;
+              img.style.top = '0px';
+            }
+
+            imgBlock.style.width = img.clientHeight * 1.25 + 'px';
+
+            relativeBox.style.width = mainBox.clientWidth - 12 - 2 * padding - img.clientWidth + 'px';
+
+            absoluteBox.style.marginTop = -absoluteBox.clientHeight / 2 + 'px';
+            relativeBox.style.width = absoluteBox.clientWidth + 'px';
+          };
+
+          if (data.link) {
+            mainBox.href = data.link;
+            mainBox.target = '_blank';
+            mainBox.style.cursor = 'pointer';
+          }
+          if (data.text) {
+            text.innerHTML = data.text.join('/n');
+          }
+
+          if (data.image) {
+            img.style.setProperty('background-image', 'url("' + data.image + '")', 'important');
+          }
+
+          button.innerHTML = 'подробнее';
+
+          setSize();
+          window.addEventListener('resize', setSize);
+      };
+
+
+    })();
+      </script>
+    </body>
+
+</html>

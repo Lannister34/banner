@@ -106,12 +106,11 @@
       <script>
         (function() {
         var timer = setTimeout(loadCheck, 100);
-        var data;
 
         function loadCheck() {
           var root = document.querySelector('#gnezdo_ru_18469');
           if (root.firstElementChild) {
-            data = parse();
+            parse();
             document.body.removeChild(root);
           } else {
             var timer = setTimeout(loadCheck, 100);
@@ -134,7 +133,6 @@
                 data.text.push(item.innerHTML);
               }
           });
-          console.log(data);
           abc(data);
         };
 
@@ -176,7 +174,7 @@
             };
 
             if (imgBlock.clientHeight * 1.25 >= 0.4 * mainBox.clientWidth) {
-              img.style.height = '70%';
+              img.style.height = '80%';
               img.style.marginTop = -img.clientHeight / 2 + 'px';
               img.style.top = '50%';
             } else {

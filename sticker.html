@@ -188,6 +188,8 @@
             imgBlock.style.width = img.clientHeight * 1.25 + 'px';
             if (imgBlock.clientHeight * 1.25 >= 0.4 * mainBox.clientWidth) {
               img.style.height = '70%';
+              img.style.marginTop = -img.clientHeight / 2 + 'px';
+              img.style.top = '50%';
             }
 
             relativeBox.style.width = mainBox.clientWidth - 12 - 2 * padding - img.clientWidth + 'px';

@@ -30,11 +30,12 @@
           background-color: #fff;
           box-sizing: border-box;
           border: 4px solid #9400d3;
+          text-align: center;
         }
 
         .position-block {
           height: 100%;
-          display: table;
+          display: inline-block;
           margin: 0 auto;
         }
 
@@ -134,7 +135,6 @@
                 data.text.push(item.innerHTML);
               }
           });
-          console.log(data);
           abc(data);
         };
 
@@ -175,29 +175,34 @@
               mainBox.style.padding = padding + 'px';
             };
 
-            if (imgBlock.clientHeight * 1.25 >= 0.4 * mainBox.clientWidth) {
-              img.style.height = '80%';
-              img.style.marginTop = -img.clientHeight / 2 + 'px';
-              img.style.top = '50%';
-            } else {
-              img.style.height = '100%';
-              img.style.marginTop = 0;
-              img.style.top = '0px';
-            }
-
-            imgBlock.style.width = img.clientHeight * 1.25 + 'px';
-            if (imgBlock.clientHeight * 1.25 >= 0.4 * mainBox.clientWidth) {
-              img.style.height = '70%';
-              img.style.marginTop = -img.clientHeight / 2 + 'px';
-              img.style.top = '50%';
-            }
-
-            relativeBox.style.width = mainBox.clientWidth - 12 - 2 * padding - img.clientWidth + 'px';
-            relativeBox.style.width = absoluteBox.clientWidth + 'px';
-            setFontSize(changed);
-            absoluteBox.style.marginTop = -absoluteBox.clientHeight / 2 + 'px';
-
-
+          function setImgSize() {
+              var changed = false;
+              if (img.style.height === '') {
+                img.style.height = '100%';
+              }
+              imgBlock.style.width = img.clientHeight * 1.25 + 'px';
+              if (window.parseFloat(img.style.height) > 40 && imgBlock.clientWidth >= 0.4 * mainBox.clientWidth) {
+                img.style.height = window.parseFloat(img.style.height) - 10 + '%';
+                img.style.marginTop = -img.clientHeight / 2 + 'px';
+                img.style.top = '50%';
+                changed = true;
+              } else if (img.style.height !== '100%' &&
+                Math.ceil((imgBlock.clientWidth * (window.parseFloat(img.style.height) + 10))  / window.parseFloat(img.style.height)) < Math.floor(0.4 * mainBox.clientWidth)) {
+                img.style.height = window.parseFloat(img.style.height) + 10 + '%';
+                img.style.marginTop = -img.clientHeight / 2 + 'px';
+                img.style.top = '50%';
+                changed = true;
+              }
+              if (img.style.height === '100%') {
+                img.style.marginTop = 0;
+                img.style.top = '0px';
+              }
+              imgBlock.style.width = img.clientHeight * 1.25 + 'px';
+              if (changed) {
+                changed = false;
+                setImgSize();
+              }
+              imgBlock.style.width = img.clientHeight * 1.25 + 'px';
           };
 
           function setFontSize(status) {
@@ -225,6 +230,14 @@
               }
             }
           };
+
+            setImgSize();
+            relativeBox.style.width = mainBox.clientWidth - 12 - 2 * padding - img.clientWidth + 'px';
+            relativeBox.style.width = absoluteBox.clientWidth + 'px';
+            setFontSize(changed);
+            absoluteBox.style.marginTop = -absoluteBox.clientHeight / 2 + 'px';
+          };
+
 
           if (data.link) {
             mainBox.href = data.link;
